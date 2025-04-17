@@ -97,6 +97,17 @@ export default function BookList() {
             console.error('Failed to update:', err);
         }
     };
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setEditForm((prev) => ({ ...prev, image: reader.result }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
 
     return (
         <div className="p-4">
@@ -156,14 +167,14 @@ export default function BookList() {
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded shadow-lg max-w-md w-full">
-                        <h3 className="text-xl font-bold mb-4">Edit Book</h3>
+                        <h3 className="text-xl font-bold mb-4 text-black">Edit Book</h3>
                         <form onSubmit={handleEditSubmit} className="flex flex-col gap-3">
                             <input
                                 name="title"
                                 value={editForm.title}
                                 onChange={handleEditChange}
                                 placeholder="Title"
-                                className="border p-2 rounded"
+                                className="border p-2 rounded text-black"
                                 required
                             />
                             <input
@@ -171,22 +182,22 @@ export default function BookList() {
                                 value={editForm.author}
                                 onChange={handleEditChange}
                                 placeholder="Author"
-                                className="border p-2 rounded"
+                                className="border p-2 rounded text-black"
                                 required
                             />
                             <input
-                                name="image"
-                                value={editForm.image}
-                                onChange={handleEditChange}
-                                placeholder="Image URL"
-                                className="border p-2 rounded"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageChange(e)}
+                                className="border p-2 rounded text-black"
                             />
+
                             <textarea
                                 name="description"
                                 value={editForm.description}
                                 onChange={handleEditChange}
                                 placeholder="Description"
-                                className="border p-2 rounded"
+                                className="border p-2 rounded text-black"
                                 rows={4}
                             />
                             <div className="flex justify-end gap-2">
