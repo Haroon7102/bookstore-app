@@ -1,5 +1,6 @@
+'use client';
 import { useState } from 'react';
-import { addBook } from '../services/bookService';
+import { addBook } from '../api/bookService';
 
 export default function BookForm({ onAdd }) {
     const [title, setTitle] = useState('');
